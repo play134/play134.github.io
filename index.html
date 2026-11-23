@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wallace Carvalho — Projetos Retro</title>
-<meta name="description" content="RLDOOM2, patches XBAND e outros projetos de SNES e Mega Drive.">
+<title>play134 — Projetos Retro</title>
+<meta name="description" content="SNES DOOM2 e outros projetos de SNES e Mega Drive.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -114,14 +114,14 @@
 <nav><div class="wrap">
   <a class="logo" href="#">play134//RETRO</a>
   <div class="links">
-    <a href="#rldoom2">RLDOOM2</a><a href="#projetos">Projetos</a><a href="#musica">Trilha</a><a href="#aplicar">Como aplicar</a>
+    <a href="#doom2">SNES DOOM2</a><a href="#projetos">Projetos</a><a href="#musica">Trilha</a><a href="#aplicar">Como aplicar</a>
   </div>
 </div></nav>
 
 <header class="hero">
   <canvas id="fire"></canvas>
   <div class="wrap">
-    <div class="tag-top">SNES · SUPERFX · XBAND · MEGA DRIVE</div>
+    <div class="tag-top">SNES · SUPERFX · MEGA DRIVE</div>
     <h1>DOOM II<br>NO SNES.</h1>
     <p>Port de Doom II: Hell on Earth para o Super Nintendo rodando no Reality Engine (SuperFX3/GSU3).</p>
     <div class="btns">
@@ -132,8 +132,8 @@
 </header>
 
 <main>
-  <section id="rldoom2"><div class="wrap">
-    <h2>RLDOOM2</h2>
+  <section id="doom2"><div class="wrap">
+    <h2>DOOM2</h2>
     <div class="feature">
       <div class="screen" id="shot">
         <!-- Troque por um screenshot real: <img src="img/rldoom2-map01.png" alt="MAP01"> -->
@@ -141,7 +141,7 @@
       </div>
       <div>
         <h3>Doom II · SNES</h3>
-        <p>Port de Doom II sobre o motor Reality Engine do Doom de SNES, usando o chip SuperFX. Distribuído como patch IPS/BPS: você aplica sobre a sua própria ROM.</p>
+        <p>Port de Doom II sobre o motor Reality Engine do Doom de SNES, usando o chip SuperFX. </p>
         <ul class="specs">
           <li><span>Plataforma</span><span>SNES + SuperFX (GSU)</span></li>
           <li><span>Formato</span><span>Patch (IPS/BPS)</span></li>
@@ -187,7 +187,7 @@
 </main>
 
 <footer>
-  Wallace Carvalho · Rio de Janeiro ·
+  play134 · Rio de Janeiro ·
   <a href="https://github.com/SEU-USUARIO" target="_blank" rel="noopener">GitHub</a> ·
   <a href="https://youtube.com/@SEU-CANAL" target="_blank" rel="noopener">YouTube</a>
 </footer>
@@ -204,7 +204,7 @@
    status: "ok" (funcionando) | "dev" (em desenvolvimento) | "res" (pesquisa)
    ====================================================== */
 const PROJECTS = [
-  { id:"rldoom2", title:"Doom II SNES", status:"dev",
+  { id:"doom2", title:"Doom II SNES", status:"dev",
     tags:["SNES","SuperFX"], short:"Port de Doom II no Reality Engine (SuperFX/GSU).",
     details:["Distribuído como patch sobre a ROM do usuário.","Trilha sonora nova, um vídeo por faixa no YouTube."],
     links:{ patch:"downloads/rldoom2-v0.1.bps", source:"https://github.com/SEU-USUARIO/rldoom2" } },
