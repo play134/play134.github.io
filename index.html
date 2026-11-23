@@ -167,29 +167,11 @@
     <div class="grid" id="grid"></div>
   </div></section>
 
-  <section id="musica"><div class="wrap">
-    <h2>TRILHA SONORA</h2>
-    <p style="color:var(--muted);margin-bottom:24px;max-width:700px">Músicas novas compostas para o Doom II de SNES. Um vídeo por faixa — clique para tocar.</p>
-    <div class="tracks" id="tracks"></div>
-  </div></section>
-
-  <section id="aplicar"><div class="wrap">
-    <h2>COMO APLICAR O PATCH</h2>
-    <ol class="steps">
-      <li>Tenha um dump da sua cópia original do cartucho indicado na página do projeto.</li>
-      <li>Confira o checksum da ROM (CRC32/SHA-1 listados no projeto).</li>
-      <li>Abra o <a href="https://www.marcrobledo.com/RomPatcher.js/" target="_blank" rel="noopener">Rom Patcher JS</a>, Floating IPS ou Flips.</li>
-      <li>Selecione a ROM e o arquivo <code>.ips</code> / <code>.bps</code> e aplique.</li>
-      <li>Rode no SNES real (SD2SNES/FXPak), bsnes, Mesen ou Snes9x.</li>
-    </ol>
-    <p class="note">Este site distribui apenas patches — nenhuma ROM é hospedada aqui.</p>
-  </div></section>
 </main>
 
 <footer>
-  play134 · Rio de Janeiro ·
-  <a href="https://github.com/SEU-USUARIO" target="_blank" rel="noopener">GitHub</a> ·
-  <a href="https://youtube.com/@SEU-CANAL" target="_blank" rel="noopener">YouTube</a>
+  play134
+  <a href="https://youtube.com/@play134" target="_blank" rel="noopener">YouTube</a>
 </footer>
 
 <dialog id="modal">
@@ -209,13 +191,6 @@ const PROJECTS = [
     details:["Distribuído como patch sobre a ROM do usuário.","Trilha sonora nova, um vídeo por faixa no YouTube."],
     links:{ patch:"downloads/rldoom2-v0.1.bps", source:"https://github.com/SEU-USUARIO/rldoom2" } },
 
-];
-
-/* Faixas da trilha: cole o ID do vídeo do YouTube (o que vem depois de v=) */
-const TRACKS = [
-  { title:"MAP01 — Entryway", yt:"" },
-  { title:"MAP02 — Underhalls", yt:"" },
-  { title:"MAP03 — The Gantlet", yt:"" },
 ];
 
 /* ---------- render ---------- */
