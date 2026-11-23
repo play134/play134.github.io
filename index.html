@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -77,23 +77,6 @@
   .s-ok{background:var(--green);color:#000}.s-dev{background:var(--yellow);color:#000}.s-res{background:#4a7bd1;color:#fff}
   .empty{color:var(--muted);grid-column:1/-1}
 
-  /* MÚSICA */
-  .tracks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-  .track{background:var(--panel);border:2px solid var(--line)}
-  .track .vid{aspect-ratio:16/9;background:#000;display:grid;place-items:center;cursor:pointer;position:relative}
-  .track .vid img{width:100%;height:100%;object-fit:cover}
-  .track .vid::after{content:"▶";position:absolute;font-size:40px;color:var(--orange);text-shadow:0 0 12px #000}
-  .track iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
-  .track .info{padding:12px 14px;font-size:13px}
-  .track .info b{color:var(--yellow);font-weight:600}
-
-  /* COMO APLICAR */
-  .steps{counter-reset:s;display:grid;gap:12px;max-width:760px}
-  .steps li{list-style:none;background:var(--panel);border-left:4px solid var(--red);padding:12px 16px;counter-increment:s}
-  .steps li::before{content:counter(s,decimal-leading-zero)"  ";font:10px var(--pixel);color:var(--orange)}
-  .note{margin-top:20px;font-size:13px;color:var(--muted);max-width:760px}
-  code{background:#000;padding:1px 6px;color:var(--yellow)}
-
   /* MODAL */
   dialog{margin:auto;max-width:720px;width:92%;background:var(--bg2);color:var(--text);border:2px solid var(--orange);padding:0}
   dialog::backdrop{background:rgba(0,0,0,.75)}
@@ -114,7 +97,7 @@
 <nav><div class="wrap">
   <a class="logo" href="#">play134//RETRO</a>
   <div class="links">
-    <a href="#doom2">SNES DOOM2</a><a href="#projetos">Projetos</a><a href="#musica">Trilha</a><a href="#aplicar">Como aplicar</a>
+    <a href="#doom2">SNES DOOM2</a
   </div>
 </div></nav>
 
@@ -125,7 +108,7 @@
     <h1>DOOM II<br>NO SNES.</h1>
     <p>Port de Doom II: Hell on Earth para o Super Nintendo rodando no Reality Engine (SuperFX3/GSU3).</p>
     <div class="btns">
-      <a class="btn" href="#rldoom2">BAIXAR ROM</a>
+      <a class="btn" href="#doom2">BAIXAR ROM</a>
       <a class="btn ghost" href="#projetos">VER PROJETOS</a>
     </div>
   </div>
