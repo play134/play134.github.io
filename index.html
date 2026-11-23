@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wallace Carvalho — Projetos Retro</title>
+<meta name="description" content="RLDOOM2, patches XBAND e outros projetos de SNES e Mega Drive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0807; --bg2:#16100d; --panel:#1d1512; --line:#3a2a22;
+    --red:#c8281e; --orange:#ff8a1f; --yellow:#ffd24a; --green:#5fd35f;
+    --text:#e9dfd6; --muted:#9c8b7e;
+    --pixel:"Press Start 2P", monospace; --mono:"IBM Plex Mono", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font:15px/1.6 var(--mono);min-height:100vh}
+  /* scanlines */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px)}
+  a{color:var(--orange)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(11,8,7,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--red)}
+  nav .wrap{display:flex;align-items:center;gap:24px;height:56px}
+  nav .logo{font:12px var(--pixel);color:var(--yellow);text-decoration:none;letter-spacing:1px}
+  nav .links{margin-left:auto;display:flex;gap:18px}
+  nav .links a{color:var(--muted);text-decoration:none;font-size:13px}
+  nav .links a:hover{color:var(--orange)}
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;border-bottom:2px solid var(--line)}
+  #fire{position:absolute;inset:auto 0 0 0;width:100%;height:220px;image-rendering:pixelated;opacity:.85}
+  .hero .wrap{position:relative;padding:90px 20px 140px}
+  .tag-top{font:10px var(--pixel);color:var(--orange);letter-spacing:2px}
+  .hero h1{font:clamp(28px,6vw,56px)/1.25 var(--pixel);color:var(--red);margin:18px 0;
+    text-shadow:4px 4px 0 #3b0805, 0 0 30px rgba(200,40,30,.45)}
+  .hero p{max-width:620px;color:var(--text);font-size:16px}
+  .btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+  .btn{font:11px var(--pixel);padding:14px 18px;text-decoration:none;border:2px solid var(--orange);
+    color:var(--bg);background:var(--orange);box-shadow:4px 4px 0 #5a2a00;transition:transform .08s}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #5a2a00}
+  .btn.ghost{background:transparent;color:var(--orange)}
+
+  section{padding:70px 0;border-bottom:1px solid var(--line)}
+  h2{font:16px var(--pixel);color:var(--yellow);margin-bottom:28px}
+  h2::before{content:"> ";color:var(--red)}
+
+  /* DESTAQUE */
+  .feature{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;background:var(--panel);border:2px solid var(--line);padding:26px}
+  .screen{aspect-ratio:8/7;background:#000;border:4px solid #2b211c;display:grid;place-items:center;position:relative;overflow:hidden}
+  .screen img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+  .screen .ph{font:10px var(--pixel);color:var(--muted);text-align:center;padding:20px;line-height:2}
+  .feature h3{font:20px var(--pixel);color:var(--red);margin-bottom:12px}
+  .specs{list-style:none;margin:16px 0;display:grid;gap:6px}
+  .specs li{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:4px 0;font-size:13px}
+  .specs li span:first-child{color:var(--muted)}
+  .progress{height:16px;background:#000;border:2px solid var(--line);margin:8px 0 4px}
+  .progress div{height:100%;background:repeating-linear-gradient(90deg,var(--green) 0 10px,#3fa33f 10px 12px)}
+
+  /* FILTROS + CARDS */
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;align-items:center}
+  .chip{font:9px var(--pixel);padding:9px 12px;background:transparent;color:var(--muted);border:2px solid var(--line);cursor:pointer}
+  .chip.on,.chip:hover{color:var(--bg);background:var(--orange);border-color:var(--orange)}
+  .search{margin-left:auto;background:#000;border:2px solid var(--line);color:var(--text);font:13px var(--mono);padding:8px 12px;min-width:220px}
+  .search:focus{outline:none;border-color:var(--orange)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+  .card{background:var(--panel);border:2px solid var(--line);padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:border-color .1s, transform .1s}
+  .card:hover{border-color:var(--orange);transform:translateY(-3px)}
+  .card h4{font:11px/1.6 var(--pixel);color:var(--text)}
+  .card p{font-size:13px;color:var(--muted);flex:1}
+  .meta{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{font-size:11px;padding:1px 7px;border:1px solid var(--line);color:var(--muted)}
+  .status{font:8px var(--pixel);padding:5px 7px;align-self:flex-start}
+  .s-ok{background:var(--green);color:#000}.s-dev{background:var(--yellow);color:#000}.s-res{background:#4a7bd1;color:#fff}
+  .empty{color:var(--muted);grid-column:1/-1}
+
+  /* MÚSICA */
+  .tracks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .track{background:var(--panel);border:2px solid var(--line)}
+  .track .vid{aspect-ratio:16/9;background:#000;display:grid;place-items:center;cursor:pointer;position:relative}
+  .track .vid img{width:100%;height:100%;object-fit:cover}
+  .track .vid::after{content:"▶";position:absolute;font-size:40px;color:var(--orange);text-shadow:0 0 12px #000}
+  .track iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .track .info{padding:12px 14px;font-size:13px}
+  .track .info b{color:var(--yellow);font-weight:600}
+
+  /* COMO APLICAR */
+  .steps{counter-reset:s;display:grid;gap:12px;max-width:760px}
+  .steps li{list-style:none;background:var(--panel);border-left:4px solid var(--red);padding:12px 16px;counter-increment:s}
+  .steps li::before{content:counter(s,decimal-leading-zero)"  ";font:10px var(--pixel);color:var(--orange)}
+  .note{margin-top:20px;font-size:13px;color:var(--muted);max-width:760px}
+  code{background:#000;padding:1px 6px;color:var(--yellow)}
+
+  /* MODAL */
+  dialog{margin:auto;max-width:720px;width:92%;background:var(--bg2);color:var(--text);border:2px solid var(--orange);padding:0}
+  dialog::backdrop{background:rgba(0,0,0,.75)}
+  .mhead{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:2px solid var(--line)}
+  .mhead h3{font:13px/1.6 var(--pixel);color:var(--yellow)}
+  .x{background:none;border:0;color:var(--muted);font:14px var(--pixel);cursor:pointer}
+  .mbody{padding:20px;display:grid;gap:14px}
+  .mbody ul{padding-left:20px}
+  .mlinks{display:flex;gap:10px;flex-wrap:wrap}
+  .mlinks .btn{font-size:9px;padding:10px 12px}
+
+  footer{padding:40px 0;color:var(--muted);font-size:12px;text-align:center}
+  @media (max-width:760px){.feature{grid-template-columns:1fr}nav .links{display:none}.search{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#">play134//RETRO</a>
+  <div class="links">
+    <a href="#rldoom2">RLDOOM2</a><a href="#projetos">Projetos</a><a href="#musica">Trilha</a><a href="#aplicar">Como aplicar</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <canvas id="fire"></canvas>
+  <div class="wrap">
+    <div class="tag-top">SNES · SUPERFX · XBAND · MEGA DRIVE</div>
+    <h1>DOOM II<br>NO SNES.</h1>
+    <p>Port de Doom II: Hell on Earth para o Super Nintendo rodando no Reality Engine (SuperFX3/GSU3).</p>
+    <div class="btns">
+      <a class="btn" href="#rldoom2">BAIXAR ROM</a>
+      <a class="btn ghost" href="#projetos">VER PROJETOS</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="rldoom2"><div class="wrap">
+    <h2>RLDOOM2</h2>
+    <div class="feature">
+      <div class="screen" id="shot">
+        <!-- Troque por um screenshot real: <img src="img/rldoom2-map01.png" alt="MAP01"> -->
+        <div class="ph">COLOQUE AQUI<br>UM SCREENSHOT<br>256×224</div>
+      </div>
+      <div>
+        <h3>Doom II · SNES</h3>
+        <p>Port de Doom II sobre o motor Reality Engine do Doom de SNES, usando o chip SuperFX. Distribuído como patch IPS/BPS: você aplica sobre a sua própria ROM.</p>
+        <ul class="specs">
+          <li><span>Plataforma</span><span>SNES + SuperFX (GSU)</span></li>
+          <li><span>Formato</span><span>Patch (IPS/BPS)</span></li>
+          <li><span>Versão</span><span id="ver">v0.1</span></li>
+          <li><span>Testado em</span><span>SNES real · SD2SNES · emulador</span></li>
+        </ul>
+        <div style="font-size:12px;color:var(--muted)">Progresso dos mapas</div>
+        <div class="progress"><div style="width:40%"></div></div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:18px">12 / 30 mapas jogáveis (edite em index.html)</div>
+        <div class="btns" style="margin-top:0">
+          <a class="btn" href="downloads/rldoom2-v0.1.bps" download>PATCH</a>
+          <a class="btn ghost" href="#musica">TRILHA</a>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="projetos"><div class="wrap">
+    <h2>PROJETOS</h2>
+    <div class="toolbar" id="filters">
+      <input class="search" id="q" type="search" placeholder="buscar projeto…" aria-label="Buscar">
+    </div>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section id="musica"><div class="wrap">
+    <h2>TRILHA SONORA</h2>
+    <p style="color:var(--muted);margin-bottom:24px;max-width:700px">Músicas novas compostas para o Doom II de SNES. Um vídeo por faixa — clique para tocar.</p>
+    <div class="tracks" id="tracks"></div>
+  </div></section>
+
+  <section id="aplicar"><div class="wrap">
+    <h2>COMO APLICAR O PATCH</h2>
+    <ol class="steps">
+      <li>Tenha um dump da sua cópia original do cartucho indicado na página do projeto.</li>
+      <li>Confira o checksum da ROM (CRC32/SHA-1 listados no projeto).</li>
+      <li>Abra o <a href="https://www.marcrobledo.com/RomPatcher.js/" target="_blank" rel="noopener">Rom Patcher JS</a>, Floating IPS ou Flips.</li>
+      <li>Selecione a ROM e o arquivo <code>.ips</code> / <code>.bps</code> e aplique.</li>
+      <li>Rode no SNES real (SD2SNES/FXPak), bsnes, Mesen ou Snes9x.</li>
+    </ol>
+    <p class="note">Este site distribui apenas patches — nenhuma ROM é hospedada aqui.</p>
+  </div></section>
+</main>
+
+<footer>
+  Wallace Carvalho · Rio de Janeiro ·
+  <a href="https://github.com/SEU-USUARIO" target="_blank" rel="noopener">GitHub</a> ·
+  <a href="https://youtube.com/@SEU-CANAL" target="_blank" rel="noopener">YouTube</a>
+</footer>
+
+<dialog id="modal">
+  <div class="mhead"><h3 id="mTitle"></h3><button class="x" id="mClose" aria-label="Fechar">X</button></div>
+  <div class="mbody" id="mBody"></div>
+</dialog>
+
+<script>
+/* ======================================================
+   EDITE AQUI: seus projetos. Adicionar um projeto novo =
+   copiar um bloco { ... } e mudar os campos.
+   status: "ok" (funcionando) | "dev" (em desenvolvimento) | "res" (pesquisa)
+   ====================================================== */
+const PROJECTS = [
+  { id:"rldoom2", title:"Doom II SNES", status:"dev",
+    tags:["SNES","SuperFX"], short:"Port de Doom II no Reality Engine (SuperFX/GSU).",
+    details:["Distribuído como patch sobre a ROM do usuário.","Trilha sonora nova, um vídeo por faixa no YouTube."],
+    links:{ patch:"downloads/rldoom2-v0.1.bps", source:"https://github.com/SEU-USUARIO/rldoom2" } },
+
+];
+
+/* Faixas da trilha: cole o ID do vídeo do YouTube (o que vem depois de v=) */
+const TRACKS = [
+  { title:"MAP01 — Entryway", yt:"" },
+  { title:"MAP02 — Underhalls", yt:"" },
+  { title:"MAP03 — The Gantlet", yt:"" },
+];
+
+/* ---------- render ---------- */
+const STATUS = { ok:["FUNCIONANDO","s-ok"], dev:["EM DESENV.","s-dev"], res:["PESQUISA","s-res"] };
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let activeTag = "Todos";
+
+function buildFilters(){
+  const tags = ["Todos", ...new Set(PROJECTS.flatMap(p => p.tags))];
+  const bar = $("#filters"), q = $("#q");
+  tags.forEach(t => {
+    const b = document.createElement("button");
+    b.className = "chip" + (t === activeTag ? " on" : "");
+    b.textContent = t.toUpperCase();
+    b.onclick = () => { activeTag = t; document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); renderGrid(); };
+    bar.insertBefore(b, q);
+  });
+  q.oninput = renderGrid;
+}
+
+function renderGrid(){
+  const term = $("#q").value.trim().toLowerCase();
+  const list = PROJECTS.filter(p =>
+    (activeTag === "Todos" || p.tags.includes(activeTag)) &&
+    (!term || (p.title + " " + p.short + " " + p.tags.join(" ")).toLowerCase().includes(term)));
+  $("#grid").innerHTML = list.length ? list.map(p => {
+    const [label, cls] = STATUS[p.status];
+    return `<article class="card" data-id="${p.id}" tabindex="0">
+      <span class="status ${cls}">${label}</span>
+      <h4>${esc(p.title)}</h4><p>${esc(p.short)}</p>
+      <div class="meta">${p.tags.map(t => `<span class="pill">${esc(t)}</span>`).join("")}</div>
+    </article>`;
+  }).join("") : `<p class="empty">Nenhum projeto encontrado.</p>`;
+  document.querySelectorAll(".card").forEach(c => {
+    c.onclick = () => location.hash = "p/" + c.dataset.id;
+    c.onkeydown = e => { if (e.key === "Enter") c.click(); };
+  });
+}
+
+function openProject(id){
+  const p = PROJECTS.find(x => x.id === id); if (!p) return;
+  const L = p.links || {};
+  const linkBtns = [
+    L.patch && `<a class="btn" href="${L.patch}" download>BAIXAR PATCH</a>`,
+    L.source && `<a class="btn ghost" href="${L.source}" target="_blank" rel="noopener">CÓDIGO</a>`,
+    L.video && `<a class="btn ghost" href="${L.video}" target="_blank" rel="noopener">VÍDEO</a>`,
+  ].filter(Boolean).join("");
+  $("#mTitle").textContent = p.title;
+  $("#mBody").innerHTML = `<p>${esc(p.short)}</p>
+    ${p.details.length ? `<ul>${p.details.map(d => `<li>${esc(d)}</li>`).join("")}</ul>` : ""}
+    <div class="meta">${p.tags.map(t => `<span class="pill">${esc(t)}</span>`).join("")}</div>
+    ${linkBtns ? `<div class="mlinks">${linkBtns}</div>` : ""}
+    <p style="font-size:12px;color:var(--muted)">Link direto: <code>${location.origin + location.pathname}#p/${p.id}</code></p>`;
+  if (!$("#modal").open) $("#modal").showModal();
+}
+$("#mClose").onclick = () => $("#modal").close();
+$("#modal").addEventListener("close", () => { if (location.hash.startsWith("#p/")) history.replaceState(null, "", location.pathname); });
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") $("#modal").close(); });
+
+function route(){ const h = location.hash; if (h.startsWith("#p/")) openProject(h.slice(3)); }
+window.addEventListener("hashchange", route);
+
+function renderTracks(){
+  $("#tracks").innerHTML = TRACKS.map((t, i) => `
+    <div class="track">
+      <div class="vid" data-i="${i}">${t.yt ? `<img loading="lazy" src="https://i.ytimg.com/vi/${t.yt}/hqdefault.jpg" alt="">` : `<span class="ph" style="font:9px var(--pixel);color:var(--muted)">VÍDEO EM BREVE</span>`}</div>
+      <div class="info"><b>${String(i+1).padStart(2,"0")}</b> · ${esc(t.title)}</div>
+    </div>`).join("");
+  document.querySelectorAll(".vid").forEach(v => v.onclick = () => {
+    const t = TRACKS[v.dataset.i]; if (!t.yt) return;
+    v.outerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${t.yt}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  });
+}
+
+/* ---------- fogo do Doom (algoritmo clássico do PSX Doom) ---------- */
+function fire(){
+  const cv = $("#fire"), ctx = cv.getContext("2d");
+  const W = 160, H = 60; cv.width = W; cv.height = H;
+  const pal = [];
+  for (let i = 0; i < 37; i++){
+    const t = i / 36;
+    pal.push([Math.min(255, t*3*255), Math.max(0, Math.min(255, (t*3-1)*255)), Math.max(0, Math.min(255, (t*3-2)*255)), i ? 255 : 0]);
+  }
+  const px = new Uint8Array(W*H); px.fill(36, (H-1)*W);
+  const img = ctx.createImageData(W, H);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function step(){
+    for (let x = 0; x < W; x++) for (let y = 1; y < H; y++){
+      const src = y*W + x, r = (Math.random()*3) | 0;
+      const dst = src - W - r + 1;
+      px[Math.max(0, dst)] = Math.max(0, px[src] - (r & 1));
+    }
+    for (let i = 0; i < px.length; i++){ const c = pal[px[i]]; img.data.set(c, i*4); }
+    ctx.putImageData(img, 0, 0);
+    if (!reduce) setTimeout(() => requestAnimationFrame(step), 50);
+  }
+  step();
+}
+
+buildFilters(); renderGrid(); renderTracks(); fire(); route();
+</script>
+</body>
+</html>
