@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RLDOOM2 — Doom II on SNES</title>
-<meta name="description" content="DOOM2: Hell on Earth para o SNES com SuperFX 3.">
+<meta name="description" content="DOOM II: Hell on Earth for the SNES with Super FX 3.">
 <style>
   :root{--bg:#111;--panel:#1a1a1a;--line:#2c2c2c;--text:#e6e6e6;--muted:#999;--accent:#d9342b}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -25,8 +25,9 @@
 
   h2{font-size:20px;margin-bottom:12px}
   .specs{list-style:none;margin:20px 0 28px;border-top:1px solid var(--line)}
-  .specs li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .specs li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
   .specs li span:first-child{color:var(--muted)}
+  .specs li span:last-child{text-align:right}
 
   .btns{display:flex;gap:12px;flex-wrap:wrap}
   .btn{display:inline-block;padding:12px 20px;border-radius:6px;text-decoration:none;font-weight:600;
@@ -42,32 +43,31 @@
 <body>
 
 <header><div class="wrap">
-  <div class="kicker">SNES · SuperFX</div>
-  <h1>SNES DOOMII by play134</h1>
-  <p>Meu port de Doom II para o Super Nintendo.</p>
+  <div class="kicker">SNES · SuperFX3</div>
+  <h1>SNES DOOM RL engine by play134</h1>
+  <p>My port of Doom II for the Super Nintendo.</p>
 </div></header>
 
 <main><div class="wrap">
   <div class="screen">
-    <!-- Troque por um screenshot real: <img src="img/1.png" alt="RLDOOM2"> -->
-    <img src="img/1.png" alt="RLDOOM2">
+    <img src="img/1.png" alt="SNES Doom II screenshot">
   </div>
 
-  <h2>Sobre</h2>
-  <p>Não se trata de um hack, foi feito sobre o motor do 95 com efeitos + músicas novas, novos monstros, todos os mapas + secretos, Super Shot Gun e cheats.</p>
+  <h2>About</h2>
+  <p>This is not a hack. It was built on the Doom95 engine and adds new effects and music, new monsters, every map including the secret levels, the Super Shotgun, and cheats.</p>
 
   <ul class="specs">
-    <li><span>Plataforma</span><span>SNES + fpga compativel com SUPER FX3 ou Mesen/SupersSnes9x</span></li>
-    <li><span>Formato</span><span>Patch IPS/BPS</span></li>
-    <li><span>Versão</span><span id="ver">v0.1</span></li>
+    <li><span>Platform</span><span>SNES + Super FX 3–compatible FPGA cart, or Mesen / Snes9x</span></li>
+    <li><span>Format</span><span>IPS/BPS patch</span></li>
+    <li><span>Version</span><span id="ver">v0.1</span></li>
     <li><span>Downloads</span><span id="dl">—</span></li>
   </ul>
 
   <div class="btns">
-    <a class="btn" id="dlbtn" href="#">Baixar patch</a>
-    <a class="btn ghost" href="https://www.youtube.com/@play134" target="_blank" rel="noopener">Vídeos no YouTube</a>
+    <a class="btn" id="dlbtn" href="#">Download patch</a>
+    <a class="btn ghost" href="https://www.youtube.com/@play134" target="_blank" rel="noopener">YouTube videos</a>
   </div>
-  <p class="note">Este site distribui apenas o patch.</p>
+  <p class="note">This site only distributes the patch. No ROMs are hosted here.</p>
 </div></main>
 
 <footer>
@@ -84,22 +84,21 @@ const REPO  = "-releases";
 (async () => {
   const dl = document.getElementById("dl");
   const btn = document.getElementById("dlbtn");
-  const releasesPage = `https://github.com/${OWNER}/${REPO}/releases/latest`;
-  btn.href = releasesPage;
+  btn.href = `https://github.com/${OWNER}/${REPO}/releases/latest`;
   try {
     const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/releases?per_page=100`);
     if (!r.ok) throw new Error(r.status);
     const releases = await r.json();
     const total = releases.reduce((sum, rel) =>
       sum + rel.assets.reduce((s, a) => s + a.download_count, 0), 0);
-    dl.textContent = total.toLocaleString("pt-BR");
+    dl.textContent = total.toLocaleString("en-US");
     const latest = releases.find(rel => !rel.draft && !rel.prerelease) || releases[0];
     if (latest) {
       document.getElementById("ver").textContent = latest.tag_name;
       if (latest.assets[0]) btn.href = latest.assets[0].browser_download_url;
     }
   } catch (e) {
-    dl.textContent = "indisponível";
+    dl.textContent = "unavailable";
   }
 })();
 </script>
